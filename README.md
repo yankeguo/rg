@@ -2,7 +2,6 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/guoyk93/rg.svg)](https://pkg.go.dev/github.com/guoyk93/rg)
 [![Go](https://github.com/guoyk93/rg/actions/workflows/go.yml/badge.svg)](https://github.com/guoyk93/rg/actions/workflows/go.yml)
-[![Ko-fi](https://img.shields.io/badge/Ko--fi-guoyk-orange)](https://ko-fi.com/guoyk)
 
 `rg (Royal Guard)` is a generics based throw-catch approach in Go
 
