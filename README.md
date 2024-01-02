@@ -1,7 +1,7 @@
 # rg
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/guoyk93/rg.svg)](https://pkg.go.dev/github.com/guoyk93/rg)
-[![Go](https://github.com/guoyk93/rg/actions/workflows/go.yml/badge.svg)](https://github.com/guoyk93/rg/actions/workflows/go.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/yankeguo/rg.svg)](https://pkg.go.dev/github.com/yankeguo/rg)
+[![Go](https://github.com/yankeguo/rg/actions/workflows/go.yml/badge.svg)](https://github.com/yankeguo/rg/actions/workflows/go.yml)
 
 `rg (Royal Guard)` is a generics based throw-catch approach in Go
 
@@ -16,7 +16,7 @@ package demo
 
 import (
 	"encoding/json"
-	"github.com/guoyk93/rg"
+	"github.com/yankeguo/rg"
 	"gopkg.in/yaml.v3"
 	"os"
 )
@@ -52,10 +52,6 @@ func jsonFileToYAML(filename string) (err error) {
 	return
 }
 ```
-
-## Donation
-
-See https://guoyk.xyz/donation
 
 ## Credits
 

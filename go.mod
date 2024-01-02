@@ -1,4 +1,4 @@
-module github.com/guoyk93/rg
+module github.com/yankeguo/rg
 
 go 1.18
 
