@@ -2,8 +2,9 @@ package rg
 
 import (
 	"errors"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestGuard(t *testing.T) {
@@ -13,6 +14,24 @@ func TestGuard(t *testing.T) {
 		panic(errors.New("hello"))
 	}()
 	require.Error(t, err)
+	require.Equal(t, "hello", err.Error())
+}
+
+func TestOnGuard(t *testing.T) {
+	var err error
+	var err2 any
+	OnGuard = func(e any) {
+		err2 = e
+	}
+	defer func() {
+		OnGuard = nil
+	}()
+	func() {
+		defer Guard(&err)
+		panic(errors.New("hello"))
+	}()
+	require.Error(t, err)
+	require.Equal(t, err, err2)
 	require.Equal(t, "hello", err.Error())
 }
 

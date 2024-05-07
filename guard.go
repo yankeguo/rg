@@ -4,9 +4,15 @@ import (
 	"fmt"
 )
 
+// OnGuard is a global hook for Guard
+var OnGuard func(r any)
+
 // Guard recover from panic and set err
 func Guard(err *error) {
 	if r := recover(); r != nil {
+		if fn := OnGuard; fn != nil {
+			fn(r)
+		}
 		if re, ok := r.(error); ok {
 			*err = re
 		} else {
