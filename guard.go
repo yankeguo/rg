@@ -27,7 +27,6 @@ func WithContext(ctx context.Context) Option {
 }
 
 // Guard recover from panic and set err
-// Deprecated use GuardWithContext
 func Guard(err *error, opts ...Option) {
 	_opts := options{}
 	for _, opt := range opts {
