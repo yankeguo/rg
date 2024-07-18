@@ -1,17 +1,30 @@
 package rg
 
 import (
+	"context"
 	"fmt"
 )
 
 // OnGuard is a global hook for Guard
+// Deprecated use OnGuardWithContext
 var OnGuard func(r any)
 
+// OnGuardWithContext is a global hook for Guard And GuardWithContext
+var OnGuardWithContext func(ctx context.Context, r any)
+
 // Guard recover from panic and set err
+// Deprecated use GuardWithContext
 func Guard(err *error) {
+	GuardWithContext(context.TODO(), err)
+}
+
+func GuardWithContext(ctx context.Context, err *error) {
 	if r := recover(); r != nil {
 		if fn := OnGuard; fn != nil {
 			fn(r)
+		}
+		if fn := OnGuardWithContext; fn != nil {
+			fn(ctx, r)
 		}
 		if re, ok := r.(error); ok {
 			*err = re

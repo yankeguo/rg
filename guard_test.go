@@ -1,6 +1,7 @@
 package rg
 
 import (
+	"context"
 	"errors"
 	"testing"
 
@@ -33,6 +34,17 @@ func TestOnGuard(t *testing.T) {
 	require.Error(t, err)
 	require.Equal(t, err, err2)
 	require.Equal(t, "hello", err.Error())
+}
+func TestOnGuardWithContext(t *testing.T) {
+	OnGuardWithContext = func(ctx context.Context, r any) {
+		require.Equal(t, "val", ctx.Value("key"))
+	}
+	fn := func(ctx context.Context) (err error) {
+		defer GuardWithContext(ctx, &err)
+		panic(errors.New("GuardWithContext"))
+		return
+	}
+	_ = fn(context.WithValue(context.TODO(), "key", "val"))
 }
 
 func TestGuardNotError(t *testing.T) {
