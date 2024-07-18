@@ -17,6 +17,7 @@ package demo
 import (
 	"context"
 	"encoding/json"
+	"gopkg.in/yaml.v3"
 	"github.com/yankeguo/rg"
 	"os"
 )
@@ -57,11 +58,11 @@ func GuardCallbackOnErrWithContext(ctx context.Context)(err error) {
         // do something like logging with ctx on guarded
 	}
 	// for recovery panic
-	defer rg.GuardWithContext(ctx, &err)
+	defer rg.Guard(&err, rg.WithContext(ctx))
 	// if err is not nil, it will panic
 	file:=rg.Must(os.ReadFile("something.txt"))
 	rg.Must0(os.WriteFile("something.txt", file, 0640))
-	return 
+	return
 }
 ```
 

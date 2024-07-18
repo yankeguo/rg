@@ -12,13 +12,33 @@ var OnGuard func(r any)
 // OnGuardWithContext is a global hook for Guard And GuardWithContext
 var OnGuardWithContext func(ctx context.Context, r any)
 
-// Guard recover from panic and set err
-// Deprecated use GuardWithContext
-func Guard(err *error) {
-	GuardWithContext(context.TODO(), err)
+type options struct {
+	ctx context.Context
 }
 
-func GuardWithContext(ctx context.Context, err *error) {
+// Option for Guard
+type Option func(opts *options)
+
+// WithContext set context for Guard
+func WithContext(ctx context.Context) Option {
+	return func(opts *options) {
+		opts.ctx = ctx
+	}
+}
+
+// Guard recover from panic and set err
+// Deprecated use GuardWithContext
+func Guard(err *error, opts ...Option) {
+	_opts := options{}
+	for _, opt := range opts {
+		opt(&_opts)
+	}
+
+	ctx := _opts.ctx
+	if ctx == nil {
+		ctx = context.TODO()
+	}
+
 	if r := recover(); r != nil {
 		if fn := OnGuard; fn != nil {
 			fn(r)
