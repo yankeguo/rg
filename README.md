@@ -15,9 +15,9 @@ Any function with the latest return value of type `error` can be wrapped by `rg.
 package demo
 
 import (
+	"context"
 	"encoding/json"
 	"github.com/yankeguo/rg"
-	"gopkg.in/yaml.v3"
 	"os"
 )
 
@@ -50,6 +50,18 @@ func jsonFileToYAML(filename string) (err error) {
 	buf = rg.Must(yaml.Marshal(m))
 	rg.Must0(os.WriteFile(filename+".yaml", buf, 0640))
 	return
+}
+
+func GuardCallbackOnErrWithContext(ctx context.Context)(err error) {
+	rg.OnGuardWithContext = func(ctx context.Context, r any) {
+        // do something like logging with ctx on guarded
+	}
+	// for recovery panic
+	defer rg.GuardWithContext(ctx, &err)
+	// if err is not nil, it will panic
+	file:=rg.Must(os.ReadFile("something.txt"))
+	rg.Must0(os.WriteFile("something.txt", file, 0640))
+	return 
 }
 ```
 
