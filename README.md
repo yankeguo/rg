@@ -9,7 +9,13 @@ A generics-based throw-catch approach in Go
 
 ## Usage
 
+**Throw**
+
 Any function with the latest return value of type `error` can be wrapped by `rg.Must` (or `rg.Must2`, `rg.Must3` ...)
+
+**Catch**
+
+Use `defer rg.Guard(&err)` to catch the thrown error, and the error will be assigned to `err` if any.
 
 ## Example
 

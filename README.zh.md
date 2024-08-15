@@ -9,11 +9,15 @@
 
 ## 用法
 
-任何一个末尾返回值为 `error` 类型的函数，均可以使用 `rg.Must` 包裹起来（或者 `rg.Must2`, `rg.Must3` ...），实现异常抛出
+**Throw**
 
-使用 `defer rg.Guard(&err)` 实现异常捕获
+任何一个末尾返回值为 `error` 类型的函数, 均可以使用 `rg.Must` 包裹起来（或者 `rg.Must2`, `rg.Must3` ...）, 实现异常抛出
 
-## 距离
+**Catch**
+
+使用 `defer rg.Guard(&err)` 实现异常捕获; 如果有异常, 将会被赋值给 `err`
+
+## 举例
 
 ```go
 package demo
@@ -46,7 +50,7 @@ func jsonFileToYAMLUgly(filename string) (err error) {
 	return
 }
 
-// 使用 rg，优雅的处理异常
+// 使用 rg, 优雅的处理异常
 func jsonFileToYAML(filename string) (err error) {
 	defer rg.Guard(&err)
 	buf := rg.Must(os.ReadFile(filename))
@@ -57,7 +61,7 @@ func jsonFileToYAML(filename string) (err error) {
 	return
 }
 
-// 可以设置全局的异常观测回调，支持 context.Context
+// 可以设置全局的异常观测回调, 支持 context.Context
 func GuardCallbackOnErrWithContext(ctx context.Context)(err error) {
 	rg.OnGuardWithContext = func(ctx context.Context, r any) {
         // do something like logging with ctx on guarded
