@@ -1,6 +1,4 @@
-# rg
-
-皇家守卫
+# rg - 皇家守卫
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/yankeguo/rg.svg)](https://pkg.go.dev/github.com/yankeguo/rg)
 [![Go](https://github.com/yankeguo/rg/actions/workflows/go.yml/badge.svg)](https://github.com/yankeguo/rg/actions/workflows/go.yml)
