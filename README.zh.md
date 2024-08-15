@@ -1,17 +1,19 @@
 # rg
 
-Royal Guard
+皇家守卫
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/yankeguo/rg.svg)](https://pkg.go.dev/github.com/yankeguo/rg)
 [![Go](https://github.com/yankeguo/rg/actions/workflows/go.yml/badge.svg)](https://github.com/yankeguo/rg/actions/workflows/go.yml)
 
-A generics-based throw-catch approach in Go
+在 Go 中使用泛型实现 Throw-Catch 异常处理
 
-## Usage
+## 用法
 
-Any function with the latest return value of type `error` can be wrapped by `rg.Must` (or `rg.Must2`, `rg.Must3` ...)
+任何一个末尾返回值为 `error` 类型的函数，均可以使用 `rg.Must` 包裹起来（或者 `rg.Must2`, `rg.Must3` ...），实现异常抛出
 
-## Example
+使用 `defer rg.Guard(&err)` 实现异常捕获
+
+## 距离
 
 ```go
 package demo
@@ -24,7 +26,7 @@ import (
 	"os"
 )
 
-// jsonFileToYAMLUgly this is a demo function WITHOUT rg
+// 每次都处理 err, 何其丑陋
 func jsonFileToYAMLUgly(filename string) (err error) {
 	var buf []byte
 	if buf, err = os.ReadFile(filename); err != nil {
@@ -44,7 +46,7 @@ func jsonFileToYAMLUgly(filename string) (err error) {
 	return
 }
 
-// jsonFileToYAML this is a demo function WITH rg
+// 使用 rg，优雅的处理异常
 func jsonFileToYAML(filename string) (err error) {
 	defer rg.Guard(&err)
 	buf := rg.Must(os.ReadFile(filename))
@@ -55,6 +57,7 @@ func jsonFileToYAML(filename string) (err error) {
 	return
 }
 
+// 可以设置全局的异常观测回调，支持 context.Context
 func GuardCallbackOnErrWithContext(ctx context.Context)(err error) {
 	rg.OnGuardWithContext = func(ctx context.Context, r any) {
         // do something like logging with ctx on guarded
@@ -68,6 +71,6 @@ func GuardCallbackOnErrWithContext(ctx context.Context)(err error) {
 }
 ```
 
-## Credits
+## 许可证
 
 GUO YANKE, MIT License
