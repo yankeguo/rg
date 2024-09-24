@@ -28,28 +28,32 @@ func WithContext(ctx context.Context) Option {
 
 // Guard recover from panic and set err
 func Guard(err *error, opts ...Option) {
+	r := recover()
+
+	if r == nil {
+		return
+	}
+
 	_opts := options{}
+
 	for _, opt := range opts {
 		opt(&_opts)
 	}
-
-	ctx := _opts.ctx
-	if ctx == nil {
-		ctx = context.TODO()
+	if _opts.ctx == nil {
+		_opts.ctx = context.TODO()
 	}
 
-	if r := recover(); r != nil {
-		if fn := OnGuard; fn != nil {
-			fn(r)
-		}
-		if fn := OnGuardWithContext; fn != nil {
-			fn(ctx, r)
-		}
-		if re, ok := r.(error); ok {
-			*err = re
-		} else {
-			*err = fmt.Errorf("panic: %v", r)
-		}
+	if fn := OnGuard; fn != nil {
+		fn(r)
+	}
+	if fn := OnGuardWithContext; fn != nil {
+		fn(_opts.ctx, r)
+	}
+
+	if re, ok := r.(error); ok {
+		*err = re
+	} else {
+		*err = fmt.Errorf("panic: %v", r)
 	}
 }
 

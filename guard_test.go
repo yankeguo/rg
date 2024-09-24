@@ -18,6 +18,16 @@ func TestGuard(t *testing.T) {
 	require.Equal(t, "hello", err.Error())
 }
 
+func TestGuardAny(t *testing.T) {
+	var err error
+	func() {
+		defer Guard(&err)
+		panic("hello")
+	}()
+	require.Error(t, err)
+	require.Equal(t, "panic: hello", err.Error())
+}
+
 func TestOnGuard(t *testing.T) {
 	var err error
 	var err2 any
