@@ -2,6 +2,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/yankeguo/rg.svg)](https://pkg.go.dev/github.com/yankeguo/rg)
 [![Go](https://github.com/yankeguo/rg/actions/workflows/go.yml/badge.svg)](https://github.com/yankeguo/rg/actions/workflows/go.yml)
+[![codecov](https://codecov.io/gh/yankeguo/rg/graph/badge.svg?token=TAJU25VDQJ)](https://codecov.io/gh/yankeguo/rg)
 
 A generics-based throw-catch approach in Go
 
